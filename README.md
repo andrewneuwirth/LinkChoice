@@ -166,8 +166,6 @@ If LinkChoice isn't the right shape for you:
   routes automatically instead of asking each time.
 - **[Velja](https://sindresorhus.com/velja)** — closed source, $8. Closest
   UX match to LinkChoice (a popup picker), by Sindre Sorhus.
-- **[BrowserPicker](https://github.com/ealeksandrov/BrowserPicker)** —
-  another small open-source picker.
 
 ## License
 
