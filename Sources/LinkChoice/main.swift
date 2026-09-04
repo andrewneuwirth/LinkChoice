@@ -5,7 +5,9 @@
 // How it gets invoked: once set as the default browser in System Settings,
 // macOS launches this app (if needed) and delivers a GetURL Apple Event for
 // every http/https link clicked anywhere in the OS (Mail, Slack, Messages,
-// any app). No Dock icon (LSUIElement), no menu bar clutter — it just waits.
+// any app). Otherwise it just waits — a menu bar icon (see
+// MenuBarController.swift) is its only visible surface, for toggling which
+// browsers show up and other settings (Prefs.swift).
 
 import AppKit
 
@@ -26,8 +28,10 @@ let candidateBrowsers: [Browser] = [
 
 final class PickerPanel: NSPanel {
     init(url: URL, at point: NSPoint, onChoose: @escaping (Browser) -> Void, onCancel: @escaping () -> Void) {
+        let enabled = Prefs.enabledBundleIDs
         let installed = candidateBrowsers.compactMap { browser -> (Browser, URL)? in
-            guard let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: browser.bundleID) else {
+            guard enabled.contains(browser.bundleID),
+                  let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: browser.bundleID) else {
                 return nil
             }
             return (browser, appURL)
@@ -160,6 +164,7 @@ final class BrowserButton: NSView {
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     private var openPanels: [PickerPanel] = []
+    private var menuBar: MenuBarController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSAppleEventManager.shared().setEventHandler(
@@ -168,6 +173,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             forEventClass: AEEventClass(kInternetEventClass),
             andEventID: AEEventID(kAEGetURL)
         )
+        menuBar = MenuBarController()
     }
 
     /// Fallback path some launch invocations use instead of the Apple Event above.
