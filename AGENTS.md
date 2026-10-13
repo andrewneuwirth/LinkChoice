@@ -5,7 +5,7 @@ A tiny macOS app that registers as the default web browser and, for every link c
 ## Stack
 
 - Swift 5.10 tools, SwiftPM, macOS 13+. One executable target `LinkChoice` (`Sources/LinkChoice/main.swift`, `MenuBarController.swift`, `Prefs.swift`), AppKit.
-- `Info.plist` (repo root) declares `CFBundleURLTypes` for `http`/`https`; bundle id `com.andrewneuwirth.linkchoice`. `AppIcon.icns` at the root; `scripts/make_icon.swift` regenerates it.
+- `Info.plist` (repo root) declares `CFBundleURLTypes` for `http`/`https`; bundle id `com.andrewneuwirth.linkchoice`. `AppIcon.icns` at the root is the Mac Tools family plate, drawn by Kit (`swift ../Kit/tools/icon.swift fa5c5c cursorarrow.click.2 AppIcon.icns`, Kit is a private sibling repo). The app itself does not depend on Kit, so it still builds on macOS 13 for anyone.
 
 ## Commands
 
@@ -20,7 +20,7 @@ swift build                 # compile check
 
 ## Where data lives
 
-- `UserDefaults` (`Prefs.swift`): which installed browsers show in the picker, and Launch at Login. No files.
+- `UserDefaults` (`Prefs.swift`): which installed browsers show in the picker, and Open at Login. No files.
 
 ## Rules
 

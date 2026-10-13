@@ -72,7 +72,9 @@ final class PickerPanel: NSPanel {
         content.layer?.cornerRadius = 14
         content.layer?.masksToBounds = true
         content.layer?.borderWidth = 1
-        content.layer?.borderColor = NSColor.white.withAlphaComponent(0.12).cgColor
+        // The Mac Tools glass edge: a highlight, stronger on the light material (design system › glass-edge).
+        let dark = NSApp.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua]) == .darkAqua
+        content.layer?.borderColor = NSColor.white.withAlphaComponent(dark ? 0.14 : 0.55).cgColor
 
         let hostLabel = NSTextField(labelWithString: url.host ?? url.absoluteString)
         hostLabel.font = .systemFont(ofSize: 11, weight: .medium)
@@ -143,7 +145,7 @@ final class BrowserButton: NSView {
 
     override func draw(_ dirtyRect: NSRect) {
         if isHovered {
-            NSColor.white.withAlphaComponent(0.08).setFill()
+            NSColor.labelColor.withAlphaComponent(0.08).setFill()   // reads in light and dark
             NSBezierPath(roundedRect: bounds, xRadius: 8, yRadius: 8).fill()
         }
         let iconSize: CGFloat = 22

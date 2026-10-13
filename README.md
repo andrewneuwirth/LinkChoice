@@ -41,7 +41,7 @@ Click the cursor-click icon in your menu bar for:
 - **Per-browser toggles** — check/uncheck any installed browser to
   show/hide it in the picker, no rebuild needed. (You can't disable every
   browser — the last one stays checked.)
-- **Launch at Login**
+- **Open at Login**
 - **Set as Default Browser…** — does the `NSWorkspace` call for you (see
   below for why this needs a properly signed build to actually take)
 - **View on GitHub**, **Quit**
